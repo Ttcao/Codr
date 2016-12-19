@@ -26,7 +26,7 @@ end
 post '/company/signup' do
   @company = Company.new(@params)
   if @company.save
-    redirect to('/company')
+    redirect to('/company/' + @company.id.to_s)
     # redirect to the swiping page
   else
     erb :error
