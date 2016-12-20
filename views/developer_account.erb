@@ -1,5 +1,12 @@
-<h1>Your details:</h1>
+<div class="container">
+    <div class="row">
+        <h1 class="text-center" class="banner">Your details:</h1>
+    </div>
+</div>
 
-<h3> <%= @developer.name %> </h3>
-<p> <%= @developer.email %> </p>
-<pre> <%= @developer.code %> </pre>
+<div class="container">
+  <p><%= @developer.name %> </p>
+  <p> <%= @developer.email %> </p>
+  <p>Code snippet: </p>
+  <pre><%= @developer.code %> </pre>
+</div>

@@ -1,3 +1,5 @@
 class Developer < ActiveRecord::Base
-  has_and_belongs_to_many :companies
+  has_many :companies_developers
+  has_many :companies, through: :companies_developers
+  has_secure_password
 end

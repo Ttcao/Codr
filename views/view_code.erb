@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <h1 class="text-center" class="banner">View code snippets</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+    <% @show_code.each do |developer|%>
+      <pre><%= developer.code %></pre>
+    <% end %>
+    </div>
+</div>
+
+
+<form action="/developer" method="post">
+  <button type="submit" class="btn btn-warning btn-lg btn-md">NAY</button>
+</form>
+<form action="/developer" method="post">
+  <button type="submit" class="btn btn-warning btn-lg btn-md">YAY</button>
+</form>
