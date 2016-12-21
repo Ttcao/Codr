@@ -28,11 +28,17 @@ post '/company/signup' do
   @company = Company.new(@params)
   if @company.save
     # redirect to the code snippet page
-    redirect to('/company/code/' + @company.id.to_s)
+    redirect to("/company/#{@company.id}/code")
   else
     erb :error
   end
 end
+
+# Company login page
+
+
+
+
 
 # Company account page
 # need to secure this page
@@ -68,9 +74,16 @@ put "/company/:id" do
   end
 end
 
-# Company login page
-
-
+# Company delete form
+post '/company/:id/delete' do
+  begin
+    @company = Company.find(@params['id'])
+    @company.destroy
+    redirect to('/')
+  rescue
+    "This company isn't available"
+  end
+end
 
 # Company view code snippet
 get '/company/:id/code' do
@@ -128,13 +141,22 @@ post '/developer/signup' do
   end
 end
 
+# Developer login page
+
+
+
+
+
 # Developer Account page
 # need to secure this page
 get '/developer/:id' do
+  begin
     @developer = Developer.find(@params['id'])
     erb :developer_account
+  rescue
+    "There was no user with the id #{params['id']}"
+  end
 end
-
 
 # Developer render edit form
 get "/developer/:id/edit" do
@@ -164,10 +186,16 @@ put "/developer/:id" do
   end
 end
 
-# Developer login page
-
-
-
+# Developer delete form
+post '/developer/:id/delete' do
+  begin
+    @developer = Developer.find(@params['id'])
+    @developer.destroy
+    redirect to('/')
+  rescue
+    "This developer isn't available"
+  end
+end
 
 # Developer matches page
 get '/developer/:id/matches' do
