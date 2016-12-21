@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="row">
+        <h1 class="text-center" class="banner">Your Matches:</h1>
+    </div>
+</div>
+
+<% @companies.each do |company| %>
+<p><%= company.name %></p>
+<p><%= company.email %></p>
+<% end %>

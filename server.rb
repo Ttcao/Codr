@@ -42,12 +42,34 @@ get '/company/:id' do
 end
 
 # Company render edit form
-
+get "/company/:id/edit" do
+  begin
+    @company = Company.find(@params['id'])
+    erb :company_edit
+  rescue
+    "There was no user with the id #{params['id']}"
+  end
+end
 
 # Company update form
-
+put "/company/:id" do
+  @company = Company.find_by(id: @params['id'])
+  if @company
+    @company.name = @params['name']
+    @company.email = @params['email']
+    @company.description = @params['description']
+    if @company.save
+      redirect to("/company/#{@company.id}")
+    else
+      "You didn't provide all the required fields"
+    end
+  else
+    "This company is not available"
+  end
+end
 
 # Company login page
+
 
 
 # Company view code snippet
@@ -115,42 +137,45 @@ end
 
 
 # Developer render edit form
-get "/developer/edit/:id" do
+get "/developer/:id/edit" do
   begin
-    # find is a activerecord method
     @developer = Developer.find(@params['id'])
-    erb :edit_user
+    erb :developer_edit
   rescue
     "There was no user with the id #{params['id']}"
   end
 end
 
-
 # Developer update form
-post "/edit/:id" do
-  begin
-    @developer = Developer.find(@params['id'])
+put "/developer/:id" do
+  @developer = Developer.find_by(id: @params['id'])
+  if @developer
     @developer.name = @params['name']
     @developer.email = @params['email']
     @developer.code = @params['code']
+    binding.pry
     if @developer.save
-      erb :developer_account
+      redirect to("/developer/#{@developer.id}")
     else
       "You didn't provide all the required fields"
     end
-  rescue
-    "There was no user with the id #{@params['id']}"
+  else
+    "This developer is not available"
   end
 end
 
 # Developer login page
 
 
+
+
 # Developer matches page
-
-
-
-
+get '/developer/:id/matches' do
+  query = "SELECT * FROM companies WHERE id IN (SELECT company_id FROM companies_developers WHERE developer_id = #{params['id']} AND accepted = true);"
+  @companies = Company.find_by_sql(query)
+  binding.pry
+  erb :view_matches
+end
 
 not_found do
   "Error"
