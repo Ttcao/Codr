@@ -10,3 +10,16 @@
   <p>Code snippet: </p>
   <pre><%= @developer.code %> </pre>
 </div>
+
+<form action="/developer/edit/<%=entry['id']%>" method="post">
+  <label for="name">Name:</label>
+  <input name="name" class="form-control" placeholder="Enter company name">
+</form>
+
+<form action ="/edit/<%=entry['id']%>" method="post">
+  <input name="username" value="<%= @user['username'] %>"/>
+  <input name="email" value="<%= @user['email'] %>"/>
+  <input name="phone" value="<%= @user['phone'] %>"/>
+  <textarea name="description"><% @user['description'] %></textarea>
+  <button type="submit">Edit User!</button>
+</form>

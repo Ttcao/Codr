@@ -27,7 +27,7 @@ end
 post '/company/signup' do
   @company = Company.new(@params)
   if @company.save
-    # redirect to the code page
+    # redirect to the code snippet page
     redirect to('/company/code/' + @company.id.to_s)
   else
     erb :error
@@ -36,10 +36,10 @@ end
 
 # Company account page
 # need to secure this page
-# get '/company/:id' do
-#     @company = Company.find(@params['id'])
-#     erb :company_account
-# end
+get '/company/:id' do
+    @company = Company.find(@params['id'])
+    erb :company_account
+end
 
 # Company render edit form
 
@@ -51,12 +51,35 @@ end
 
 
 # Company view code snippet
-# redirect to this route handler
-get '/company/code/:id' do
+get '/company/:id/code' do
   query = "SELECT * FROM developers WHERE id NOT IN (SELECT developer_id FROM companies_developers WHERE company_id = #{params['id']})"
-  @show_code = Developer.find_by_sql(query)
+  @developer = Developer.find_by_sql(query).first
   erb :view_code
 end
+
+# Code snippet is saved to companies_developers table
+post '/company/code/viewed' do
+  if @params['accepted'] == "true"
+    @companies_developer = CompaniesDeveloper.new
+    @companies_developer.accepted = @params['accepted']
+    @companies_developer.developer_id = @params['developer_id']
+    @companies_developer.company_id = @params['company_id']
+    if @companies_developer.save
+    @company = @params['company_id']
+    redirect to('/company/' + @company.to_s + '/code')
+    end
+  elsif @params['accepted'] == "false"
+    @companies_developer = CompaniesDeveloper.new
+    @companies_developer.accepted = @params['accepted']
+    @companies_developer.developer_id = @params['developer_id']
+    @companies_developer.company_id = @params['company_id']
+    if @companies_developer.save
+    @company = @params['company_id']
+    redirect to('/company/' + @company.to_s + '/code')
+    end
+  end
+end
+
 
 # ------------------------------------------
 
@@ -92,7 +115,7 @@ end
 
 
 # Developer render edit form
-get "/edit/:id" do
+get "/developer/edit/:id" do
   begin
     # find is a activerecord method
     @developer = Developer.find(@params['id'])
@@ -106,7 +129,7 @@ end
 # Developer update form
 post "/edit/:id" do
   begin
-    @developer = User.find(@params['id'])
+    @developer = Developer.find(@params['id'])
     @developer.name = @params['name']
     @developer.email = @params['email']
     @developer.code = @params['code']
@@ -123,12 +146,9 @@ end
 # Developer login page
 
 
-# Swipe
+# Developer matches page
 
-# get '/swipe/:id' do
-#   @company = Company.find(@params['id'])
-#
-# end
+
 
 
 
