@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pry'
+require 'byebug'
 require 'active_record'
 require 'sinatra/activerecord'
 require 'json'
@@ -30,7 +31,8 @@ post '/developer/login' do
   end
 end
 
-delete '/developer/login' do
+
+delete '/developer/logout' do
   session[:developer_id] = nil
   redirect to '/developer'
 end
@@ -181,29 +183,22 @@ post '/developer/signup' do
   end
 end
 
-# Developer login page
-
-
-
-
-
 # Developer Account page
-# need to secure this page
 get '/developer/:id' do
-  begin
+  if current_user.id.to_s == @params['id']
     @developer = Developer.find(@params['id'])
     erb :developer_account
-  rescue
+  else
     erb :error
   end
 end
 
 # Developer render edit form
 get "/developer/:id/edit" do
-  begin
+  if current_user.id.to_s == @params['id']
     @developer = Developer.find(@params['id'])
     erb :developer_edit
-  rescue
+  else
     erb :error
   end
 end
@@ -226,7 +221,7 @@ put "/developer/:id" do
 end
 
 # Developer delete form
-post '/developer/:id/delete' do
+post '/developer/:id/delete'do
   begin
     @developer = Developer.find(@params['id'])
     @developer.destroy
@@ -238,12 +233,16 @@ end
 
 # Developer matches page
 get '/developer/:id/matches' do
+  if current_user.id.to_s == @params['id']
   query = "SELECT * FROM companies WHERE id IN (SELECT company_id FROM companies_developers WHERE developer_id = #{params['id']} AND accepted = true);"
   @companies = Company.find_by_sql(query)
-  if @companies.count > 0
-    erb :view_matches
+    if @companies.count > 0
+      erb :view_matches
+    else
+      erb :view_no_matches
+    end
   else
-    erb :view_no_matches
+    erb :error
   end
 end
 
