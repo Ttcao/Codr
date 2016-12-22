@@ -31,13 +31,27 @@ post '/developer/login' do
   end
 end
 
-
 delete '/developer/logout' do
   session[:developer_id] = nil
   redirect to '/developer'
 end
 
+post '/company/login' do
+  company = Company.find_by(email: @params[:email])
+  binding.pry
+  if company && company.authenticate(params[:password])
 
+    session[:company_id] = company.id
+    redirect to("/company/#{company.id}")
+  else
+    erb :company_home
+  end
+end
+
+delete '/company/logout' do
+  session[:company_id] = nil
+  redirect to '/company'
+end
 # ------------------------------------------
 
 
@@ -72,14 +86,7 @@ post '/company/signup' do
   end
 end
 
-# Company login page
-
-
-
-
-
 # Company account page
-# need to secure this page
 get '/company/:id' do
     @company = Company.find(@params['id'])
     erb :company_account

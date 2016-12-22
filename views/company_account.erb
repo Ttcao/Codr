@@ -1,5 +1,13 @@
 <div class="container edit_button">
+  <div class="text-left">
     <a class="btn btn-warning btn-lg btn-md" href="/company/<%=@company.id%>/code" role="button">View Code</a>
+  </div>
+  <div class="text-right">
+    <form action="/company/logout" method='post'>
+        <input type='hidden' name='_method' value='delete' />
+        <button class="btn btn-warning btn-lg btn-md">Logout</button>
+    </form>
+  </div>
 </div>
 
 <div class="container banner text-center">
@@ -22,6 +30,6 @@
     </p>
 </div>
 
-<div class="container text-center">
+<div class="container form_button text-center">
     <a class="btn btn-success btn-md" href="/company/<%=@company.id%>/edit" role="button">Edit</a>
 </div>
