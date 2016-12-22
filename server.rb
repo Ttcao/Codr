@@ -221,7 +221,7 @@ put "/developer/:id" do
 end
 
 # Developer delete form
-post '/developer/:id/delete'do
+post '/developer/:id/delete' do
   begin
     @developer = Developer.find(@params['id'])
     @developer.destroy

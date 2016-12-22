@@ -29,13 +29,13 @@
             <div class="container form_button">
                 <button type="submit" class="btn btn-success btn-md">Submit</button>
             </div>
-
-            <div class="container form_button">
-                <form method="post" action="/company/<%= @company.id %>/delete">
-                    <button type="submit" class="btn btn-danger btn-md">Delete account</button>
-                </form>
-            </div>
         </div>
     </form>
 
+</div>
+
+<div class="container form_button">
+    <form method="post" action="/company/<%= @company.id %>/delete">
+        <button type="submit" class="btn btn-danger btn-md">Delete account</button>
+    </form>
 </div>
