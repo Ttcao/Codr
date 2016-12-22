@@ -4,7 +4,10 @@
     </div>
 </div>
 
+<div class="container">
 <% @companies.each do |company| %>
-<p><%= company.name %></p>
-<p><%= company.email %></p>
+<p class="text-center"><%= company.name %> - <%= company.email %></p>
 <% end %>
+</div>
+
+<button class="btn btn-lg btn-warning btn-lg" type="submit" onclick="javascript:history.back()">Back to Account</button>

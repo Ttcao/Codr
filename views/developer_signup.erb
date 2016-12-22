@@ -1,10 +1,3 @@
-<!-- <form action ="/developer/signup" method="post">
-  <input name="name" placeholder="Enter your name"/>
-  <input name="email" placeholder="Enter your email address"/>
-  <textarea name="code" placeholder="Enter your code snippet"></textarea>
-  <button type="submit">Create account</button>
-</form> -->
-
 <div class="container">
     <div class="row">
         <h1 class="text-center" class="banner">Developer</h1>
@@ -15,17 +8,28 @@
   <form action="/developer/signup" method="post">
     <div class="form-group">
         <label for="name">Name:</label>
-        <input name="name" class="form-control" placeholder="Enter your name">
+        <input id="name" name="name" class="form-control" placeholder="Enter your name">
     </div>
     <div class="form-group">
         <label for="email">Email address:</label>
-        <input name="email" class="form-control" placeholder="Enter your email address">
+        <input id="email" name="email" class="form-control" placeholder="Enter your email address">
     </div>
 
+    <div class="form-group">
     <label for="description">Code snippet:</label>
-    <textarea class="form-control" name="code" rows="3" placeholder="Enter your code snippet"></textarea>
+    <textarea id="code" class="form-control" name="code" rows="3" placeholder="Enter your code snippet"></textarea>
+    </div>
+
+    <div class="form-group">
+    <label for="Password">Create a password:</label>
+    <input id="password" name="password" type="password" />
+    </div>
 
     <button type="submit" class="btn btn-warning btn-lg btn-md">Submit</button>
 
   </form>
+</div>
+
+<div class="container">
+<button class="btn btn-lg btn-warning btn-lg" type="submit" onclick="javascript:history.back()">Back to login page</button>
 </div>

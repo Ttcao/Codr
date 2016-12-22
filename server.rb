@@ -8,10 +8,46 @@ require_relative 'models/company'
 require_relative 'models/developer'
 require_relative 'models/companies_developer'
 
+enable :sessions
+
+helpers do
+  def logged_in?
+    !!current_user
+  end
+
+  def current_user
+    Developer.find_by(id: session[:developer_id])
+  end
+end
+
+post '/developer/login' do
+  developer = Developer.find_by(email: @params[:email])
+  if developer && developer.authenticate(params[:password])
+    session[:developer_id] = developer.id
+    redirect to("/developer/#{developer.id}")
+  else
+    erb :developer_home
+  end
+end
+
+delete '/developer/login' do
+  session[:developer_id] = nil
+  redirect to '/developer'
+end
+
+
+# ------------------------------------------
+
+
 #Landing page
 get '/' do
   erb :index
 end
+
+
+# ------------------------------------------
+
+
 
 #Company sign up / login page
 get '/company' do
@@ -201,7 +237,6 @@ end
 get '/developer/:id/matches' do
   query = "SELECT * FROM companies WHERE id IN (SELECT company_id FROM companies_developers WHERE developer_id = #{params['id']} AND accepted = true);"
   @companies = Company.find_by_sql(query)
-  binding.pry
   erb :view_matches
 end
 
