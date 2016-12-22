@@ -1,20 +1,36 @@
-<div class="container">
+<div class="container edit_button">
+    <a class="btn btn-warning btn-lg btn-md" href="/developer/<%=@developer.id%>/matches" role="button">View Matches</a>
+</div>
+
+<div class="container banner">
     <div class="row">
-        <h1 class="text-center" class="banner">Your details:</h1>
+        <h1 class="text-center">Your details:</h1>
     </div>
 </div>
 
 <div class="container">
-  <p><%= @developer.name %> </p>
-  <p> <%= @developer.email %> </p>
-  <p>Code snippet: </p>
-  <pre><%= @developer.code %> </pre>
+    <div class="row">
+        <div class="text-center">
+            <p>
+                <strong>Name:</strong>
+                <%= @developer.name %>
+            </p>
+            <p>
+                <strong>Email:</strong>
+                <%= @developer.email %>
+            </p>
+        </div>
+
+        <div class="text-center">
+            <p>
+                <strong>Code snippet:</strong>
+            </p>
+            <pre class="text-left developer_code"><%= @developer.code %> </pre>
+        </div>
+
+    </div>
 </div>
 
-<div class="container">
-<a class="btn btn-warning btn-lg btn-md" href="/developer/<%=@developer.id%>/edit" role="button">Edit</a>
-</div>
-
-<div class="container">
-<a class="btn btn-warning btn-lg btn-md" href="/developer/<%=@developer.id%>/matches" role="button">View Matches</a>
+<div class="container form_button text-center">
+    <a class="btn btn-success btn-md" href="/developer/<%=@developer.id%>/edit" role="button">Edit</a>
 </div>

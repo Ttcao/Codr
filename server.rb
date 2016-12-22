@@ -89,7 +89,7 @@ get "/company/:id/edit" do
     @company = Company.find(@params['id'])
     erb :company_edit
   rescue
-    "There was no user with the id #{params['id']}"
+    erb :error
   end
 end
 
@@ -123,9 +123,13 @@ end
 
 # Company view code snippet
 get '/company/:id/code' do
-  query = "SELECT * FROM developers WHERE id NOT IN (SELECT developer_id FROM companies_developers WHERE company_id = #{params['id']})"
-  @developer = Developer.find_by_sql(query).first
-  erb :view_code
+  begin
+    query = "SELECT * FROM developers WHERE id NOT IN (SELECT developer_id FROM companies_developers WHERE company_id = #{params['id']})"
+    @developer = Developer.find_by_sql(query).sample
+    erb :view_code
+  rescue
+    erb :view_no_code
+  end
 end
 
 # Code snippet is saved to companies_developers table
@@ -190,7 +194,7 @@ get '/developer/:id' do
     @developer = Developer.find(@params['id'])
     erb :developer_account
   rescue
-    "There was no user with the id #{params['id']}"
+    erb :error
   end
 end
 
@@ -200,7 +204,7 @@ get "/developer/:id/edit" do
     @developer = Developer.find(@params['id'])
     erb :developer_edit
   rescue
-    "There was no user with the id #{params['id']}"
+    erb :error
   end
 end
 
@@ -211,7 +215,6 @@ put "/developer/:id" do
     @developer.name = @params['name']
     @developer.email = @params['email']
     @developer.code = @params['code']
-    binding.pry
     if @developer.save
       redirect to("/developer/#{@developer.id}")
     else
@@ -237,9 +240,13 @@ end
 get '/developer/:id/matches' do
   query = "SELECT * FROM companies WHERE id IN (SELECT company_id FROM companies_developers WHERE developer_id = #{params['id']} AND accepted = true);"
   @companies = Company.find_by_sql(query)
-  erb :view_matches
+  if @companies.count > 0
+    erb :view_matches
+  else
+    erb :view_no_matches
+  end
 end
 
 not_found do
-  "Error"
+  erb :error
 end

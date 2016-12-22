@@ -3,11 +3,7 @@ body {
 }
 
 .banner {
-  color: blue;
-}
-
-h3 {
-  color: red;
+  padding-bottom: 20px;
 }
 
 .codesnippet {
@@ -19,6 +15,23 @@ h3 {
   padding-bottom: 150px;
 }
 
+.edit_button {
+  padding: 2%;
+}
+
+.form_button {
+  padding: 2%;
+}
+
+.developer_code {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.edit_details {
+  margin-left: 10%;
+  margin-right: 10%;
+}
 
 /* LOGIN Page*/
 

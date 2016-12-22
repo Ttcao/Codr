@@ -1,43 +1,48 @@
-<div class="container">
+<div class="container edit_button">
+    <button class="btn btn-lg btn-warning btn-lg" type="submit" onclick="javascript:history.back()">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Account</button>
+</div>
+
+<div class="container banner text-center">
     <div class="row">
-        <h1 class="text-center" class="banner">View code snippets</h1>
+        <h1>View code snippets</h1>
     </div>
 </div>
 
-<div class="col-md-2">
-    <div class="row">
-      <div class="container">
-      <button class="btn btn-lg btn-warning btn-lg" type="submit" onclick="javascript:history.back()">Back to Account</button>
-      </div>
-  </div>
+<div class="col-xs-2">
+    <div class="row"></div>
 </div>
 
 <div class="container">
-  <div class="col-md-8">
-    <div class="row">
+    <div class="col-xs-8">
+        <div class="row">
 
-      <pre class="codesnippet"><%= @developer.code %></pre>
+            <pre class="codesnippet"><%= @developer.code %></pre>
 
-      <form action="/company/code/viewed" method="post">
-        <input type="hidden" name="developer_id" value="<%= @developer.id %>">
-        <input type="hidden" name="company_id" value="<%= params['id'] %>">
-        <div class="col-xs-6 text-left">
-          <div class="button-viewed">
-            <button type="submit" name="accepted" value="false" class="btn btn-warning btn-lg btn-md"><span class="glyphicon glyphicon-remove"></span></button>
-          </div>
+            <form action="/company/code/viewed" method="post">
+                <input type="hidden" name="developer_id" value="<%= @developer.id %>">
+                <input type="hidden" name="company_id" value="<%= params['id'] %>">
+                <div class="col-xs-6 text-left">
+                    <div class="button-viewed">
+                        <button type="submit" name="accepted" value="false" class="btn btn-warning btn-lg btn-md">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-xs-6 text-right">
+                    <div class="button-viewed">
+                        <button type="submit" name="accepted" value="true" class="btn btn-warning btn-lg btn-md">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <div class="col-xs-6 text-right">
-          <div class="button-viewed">
-            <button type="submit" name="accepted" value="true" class="btn btn-warning btn-lg btn-md"><span class="glyphicon glyphicon-ok"></span></button>
-          </div>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 
-<div class="col-md-2">
-  <div class="row">
-  </div>
+<div class="col-xs-2">
+    <div class="row"></div>
 </div>

@@ -1,3 +1,7 @@
+<div class="container edit_button">
+    <button class="btn btn-lg btn-warning btn-lg" type="submit" onclick="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left" </span></button>
+</div>
+
 <div class="container">
     <div class="row">
         <h1 class="text-center" class="banner">Developer</h1>
@@ -5,31 +9,31 @@
 </div>
 
 <div class="container">
-  <form action="/developer/signup" method="post">
-    <div class="form-group">
-        <label for="name">Name:</label>
-        <input id="name" name="name" class="form-control" placeholder="Enter your name">
-    </div>
-    <div class="form-group">
-        <label for="email">Email address:</label>
-        <input id="email" name="email" class="form-control" placeholder="Enter your email address">
-    </div>
+    <form action="/developer/signup" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" name="name" class="form-control" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address:</label>
+            <input id="email" name="email" class="form-control" placeholder="Enter your email address">
+        </div>
 
-    <div class="form-group">
-    <label for="description">Code snippet:</label>
-    <textarea id="code" class="form-control" name="code" rows="3" placeholder="Enter your code snippet"></textarea>
-    </div>
+        <div class="form-group">
+            <label for="description">Code snippet:</label>
+            <textarea id="code" class="form-control" name="code" rows="3" placeholder="Enter your code snippet"></textarea>
+        </div>
 
-    <div class="form-group">
-    <label for="Password">Create a password:</label>
-    <input id="password" name="password" type="password" />
-    </div>
+        <div class="form-group">
+            <label for="Password">Create a password:</label>
+            <input id="password" name="password" type="password"/>
+        </div>
 
-    <button type="submit" class="btn btn-warning btn-lg btn-md">Submit</button>
+        <div class="col-xs-6 text-right">
+            <div class="container form_button">
+                <button type="submit" class="btn btn-success btn-sm">Submit</button>
+            </div>
+        </div>
 
-  </form>
-</div>
-
-<div class="container">
-<button class="btn btn-lg btn-warning btn-lg" type="submit" onclick="javascript:history.back()">Back to login page</button>
+    </form>
 </div>
