@@ -91,12 +91,10 @@ end
 
 # Company account page
 get '/company/:id' do
-  begin
-    if current_company.id.to_s == @params['id']
-      @company = Company.find(@params['id'])
-      erb :company_account
-    end
-  rescue
+  if current_company.id.to_s == @params['id']
+    @company = Company.find(@params['id'])
+    erb :company_account
+  else
     erb :error
   end
 end
