@@ -91,10 +91,12 @@ end
 
 # Company account page
 get '/company/:id' do
-  if current_company.id.to_s == @params['id']
-    @company = Company.find(@params['id'])
-    erb :company_account
-  else
+  begin
+    if current_company.id.to_s == @params['id']
+      @company = Company.find(@params['id'])
+      erb :company_account
+    end
+  rescue
     erb :error
   end
 end
@@ -139,18 +141,16 @@ end
 
 # Company view code snippet
 get '/company/:id/code' do
-  if current_company.id.to_s == @params['id']
-    query = "SELECT * FROM developers WHERE id NOT IN (SELECT developer_id FROM companies_developers WHERE company_id = #{params['id']})"
-    @developer = Developer.find_by_sql(query).sample
-    if @developer.code
-      erb :view_code
-    else
-      erb :view_no_code
-    end
+  current_company.id.to_s == @params['id']
+  query = "SELECT * FROM developers WHERE id NOT IN (SELECT developer_id FROM companies_developers WHERE company_id = #{params['id']})"
+  @developer = Developer.find_by_sql(query).sample
+  if @developer
+    erb :view_code
   else
-    erb :error
+    erb :view_no_code
   end
 end
+
 
 # Code snippet is saved to companies_developers table
 post '/company/code/viewed' do
