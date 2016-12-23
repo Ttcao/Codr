@@ -13,11 +13,15 @@ enable :sessions
 
 helpers do
   def logged_in?
-    !!current_user
+    !!current_developer or !!current_company
   end
 
-  def current_user
+  def current_developer
     Developer.find_by(id: session[:developer_id])
+  end
+
+  def current_company
+    Company.find_by(id: session[:company_id])
   end
 end
 
@@ -38,9 +42,7 @@ end
 
 post '/company/login' do
   company = Company.find_by(email: @params[:email])
-  binding.pry
   if company && company.authenticate(params[:password])
-
     session[:company_id] = company.id
     redirect to("/company/#{company.id}")
   else
@@ -79,8 +81,10 @@ end
 post '/company/signup' do
   @company = Company.new(@params)
   if @company.save
-    # redirect to the code snippet page
-    redirect to("/company/#{@company.id}/code")
+    company = Company.find_by(email: @params[:email])
+    session[:company_id] = company.id
+    # redirect to the company account
+    redirect to("/company/#{@company.id}")
   else
     erb :error
   end
@@ -88,16 +92,20 @@ end
 
 # Company account page
 get '/company/:id' do
+  if current_company.id.to_s == @params['id']
     @company = Company.find(@params['id'])
     erb :company_account
+  else
+    erb :error
+  end
 end
 
 # Company render edit form
 get "/company/:id/edit" do
-  begin
+  if current_company.id.to_s == @params['id']
     @company = Company.find(@params['id'])
     erb :company_edit
-  rescue
+  else
     erb :error
   end
 end
@@ -132,12 +140,16 @@ end
 
 # Company view code snippet
 get '/company/:id/code' do
-  begin
+  if current_company.id.to_s == @params['id']
     query = "SELECT * FROM developers WHERE id NOT IN (SELECT developer_id FROM companies_developers WHERE company_id = #{params['id']})"
     @developer = Developer.find_by_sql(query).sample
-    erb :view_code
-  rescue
-    erb :view_no_code
+    if @developer.code
+      erb :view_code
+    else
+      erb :view_no_code
+    end
+  else
+    erb :error
   end
 end
 
@@ -183,8 +195,10 @@ end
 post '/developer/signup' do
   @developer = Developer.new(@params)
   if @developer.save
-    redirect to('/developer/' + @developer.id.to_s)
+    developer = Developer.find_by(email: @params[:email])
+    session[:developer_id] = developer.id
     # redirect to the matches page
+    redirect to('/developer/' + @developer.id.to_s)
   else
     erb :error
   end
@@ -192,7 +206,7 @@ end
 
 # Developer Account page
 get '/developer/:id' do
-  if current_user.id.to_s == @params['id']
+  if current_developer.id.to_s == @params['id']
     @developer = Developer.find(@params['id'])
     erb :developer_account
   else
@@ -202,7 +216,7 @@ end
 
 # Developer render edit form
 get "/developer/:id/edit" do
-  if current_user.id.to_s == @params['id']
+  if current_developer.id.to_s == @params['id']
     @developer = Developer.find(@params['id'])
     erb :developer_edit
   else
@@ -240,7 +254,7 @@ end
 
 # Developer matches page
 get '/developer/:id/matches' do
-  if current_user.id.to_s == @params['id']
+  if current_developer.id.to_s == @params['id']
   query = "SELECT * FROM companies WHERE id IN (SELECT company_id FROM companies_developers WHERE developer_id = #{params['id']} AND accepted = true);"
   @companies = Company.find_by_sql(query)
     if @companies.count > 0
