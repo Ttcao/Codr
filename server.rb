@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pry'
-require 'byebug'
 require 'active_record'
 require 'sinatra/activerecord'
 require 'json'

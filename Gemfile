@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'activerecord'
@@ -7,3 +8,4 @@ gem 'pg'
 gem 'pry'
 gem 'rake'
 gem 'bcrypt'
+
