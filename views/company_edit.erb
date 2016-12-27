@@ -1,7 +1,9 @@
 <div class="container edit_button">
-    <button class="btn btn-warning btn-lg" type="submit" onclick="javascript:history.back()">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        Account</button>
+    <div class="row">
+        <button class="btn btn-warning btn-lg" type="submit" onclick="javascript:history.back()">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            Account</button>
+    </div>
 </div>
 
 <div class="container banner text-center">
@@ -11,31 +13,34 @@
 </div>
 
 <div class="container">
-    <form action="/company/<%=@company.id%>" method="post">
-        <input type="hidden" name="_method" value="put">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input id="name" name="name" class="form-control" value="<%= @company['name'] %>">
-        </div>
-        <div class="form-group">
-            <label for="email">Email address:</label>
-            <input id="email" name="email" class="form-control" value="<%= @company['email'] %>">
-        </div>
-
-        <label for="description">Description:</label>
-        <textarea id="description" class="form-control" name="description" value="<%= @company['description'] %>" rows="6"><%= @company['description'] %></textarea>
-
-        <div class="col-xs-6 text-right">
-            <div class="container form_button">
-                <button type="submit" class="btn btn-success btn-md">Submit</button>
+    <div class="row">
+        <form action="/company/<%=@company.id%>" method="post">
+            <input type="hidden" name="_method" value="put">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input id="name" name="name" class="form-control" value="<%= @company['name'] %>">
             </div>
-        </div>
-    </form>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input id="email" name="email" class="form-control" value="<%= @company['email'] %>">
+            </div>
 
+            <label for="description">Description:</label>
+            <textarea id="description" class="form-control" name="description" value="<%= @company['description'] %>" rows="6"><%= @company['description'] %></textarea>
+
+            <div class="col-xs-6 text-right">
+                <div class="container form_button">
+                    <button type="submit" class="btn btn-success btn-md">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="container form_button">
-    <form method="post" action="/company/<%= @company.id %>/delete">
-        <button type="submit" class="btn btn-danger btn-md">Delete account</button>
-    </form>
+<div class="container form_button text-right">
+    <div class="row">
+        <form method="post" action="/company/<%= @company.id %>/delete">
+            <button type="submit" class="btn btn-danger btn-md">Delete account</button>
+        </form>
+    </div>
 </div>
