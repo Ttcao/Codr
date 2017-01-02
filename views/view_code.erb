@@ -18,7 +18,7 @@
     <div class="col-xs-8">
         <div class="row">
 
-            <pre class="codesnippet"><%= @developer.code %></pre>
+            <pre class="codesnippet"><%= h @developer.code %></pre>
 
             <form action="/company/code/viewed" method="post">
                 <input type="hidden" name="developer_id" value="<%= @developer.id %>">

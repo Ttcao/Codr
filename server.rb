@@ -22,7 +22,13 @@ helpers do
   def current_company
     Company.find_by(id: session[:company_id])
   end
+
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
+
 end
+
 
 post '/developer/login' do
   developer = Developer.find_by(email: @params[:email])
